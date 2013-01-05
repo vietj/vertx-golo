@@ -1,5 +1,6 @@
 package org.vertx.golo;
 
+import fr.insalyon.citi.golo.runtime.GoloClassLoader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.vertx.java.test.TestVerticle;
@@ -14,7 +15,9 @@ import org.vertx.java.test.junit.VertxJUnit4ClassRunner;
 public class GoloTestCase extends VertxTestBase {
 
   @Test
-  public void testFoo() {
+  public void testFoo() throws Exception {
+
+    Thread.sleep(100 * 1000);
 
   }
 

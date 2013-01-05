@@ -21,6 +21,22 @@
       <version>1.3.0.Final</version>
     </dependency>
 
+    <!-- Golo dependencies for now -->
+    <dependency>
+      <groupId>gololang</groupId>
+      <artifactId>gololang</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>/Users/julien/java/gololang-r0-SNAPSHOT/lib/gololang-r0-SNAPSHOT.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm</artifactId>
+      <version>4.1</version>
+      <scope>system</scope>
+      <systemPath>/Users/julien/java/gololang-r0-SNAPSHOT/lib/asm-4.1.jar</systemPath>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
