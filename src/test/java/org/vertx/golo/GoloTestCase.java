@@ -1,6 +1,8 @@
 package org.vertx.golo;
 
-import fr.insalyon.citi.golo.runtime.GoloClassLoader;
+import junit.framework.Assert;
+import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.vertx.java.test.TestVerticle;
@@ -16,9 +18,10 @@ public class GoloTestCase extends VertxTestBase {
 
   @Test
   public void testFoo() throws Exception {
-
-    Thread.sleep(100 * 1000);
-
+    Response response = Request.Get("http://localhost:8080/").execute();
+    String expected = "GoloGolo from vert.x!";
+    String content = response.returnContent().asString();
+    Assert.assertTrue("Was expecting " + content + " to contain " + expected, content.contains(expected));
   }
 
 }
