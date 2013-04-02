@@ -23,9 +23,9 @@
 
     <!-- Golo dependencies for now -->
     <dependency>
-      <groupId>fr.citilab</groupId>
-      <artifactId>gololang</artifactId>
-      <version>r0-SNAPSHOT</version>
+      <groupId>org.golo-lang</groupId>
+      <artifactId>golo</artifactId>
+      <version>0-preview1</version>
     </dependency>
     <dependency>
       <groupId>org.ow2.asm</groupId>
@@ -54,19 +54,4 @@
 
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>julien</id>
-      <dependencies>
-        <dependency>
-          <groupId>fr.citilab</groupId>
-          <artifactId>gololang</artifactId>
-          <version>1.0</version>
-          <scope>system</scope>
-          <systemPath>/Users/julien/java/gololang-r0-SNAPSHOT/lib/gololang-r0-SNAPSHOT.jar</systemPath>
-        </dependency>
-      </dependencies>
-    </profile>
-  </profiles>
-    
 </project>
