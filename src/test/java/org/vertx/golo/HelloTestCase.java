@@ -32,7 +32,7 @@ import org.vertx.java.test.junit.VertxJUnit4ClassRunner;
 @RunWith(VertxJUnit4ClassRunner.class)
 @VertxConfiguration()
 @TestVerticle(main="hello.golo")
-public class GoloTestCase extends VertxTestBase {
+public class HelloTestCase extends VertxTestBase {
 
   @Test
   public void testFoo() throws Exception {
