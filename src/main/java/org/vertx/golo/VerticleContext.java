@@ -20,23 +20,23 @@ package org.vertx.golo;
 
 import org.vertx.golo.deploy.impl.golo.GoloVerticle;
 import org.vertx.java.core.Vertx;
-import org.vertx.java.deploy.Container;
+import org.vertx.java.platform.Container;
 
 /** @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a> */
-public class VerticleContext {
+public abstract class VerticleContext {
 
-  /** . */
-  private final GoloVerticle verticle;
-
-  public VerticleContext(GoloVerticle verticle) {
-    this.verticle = verticle;
+  public VerticleContext() {
   }
 
   public static Vertx vertx() {
-    return GoloVerticle.getCurrent().verticle.getVertx();
+    return GoloVerticle.getCurrent().getVertx();
   }
 
   public static Container container() {
-    return GoloVerticle.getCurrent().verticle.getContainer();
+    return GoloVerticle.getCurrent().getContainer();
   }
+
+  public abstract Vertx getVertx();
+
+  public abstract Container getContainer();
 }

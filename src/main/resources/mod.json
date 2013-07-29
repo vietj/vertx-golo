@@ -1,0 +1,9 @@
+{
+  "system": true,
+  "resident": true,
+  "description":"Golo language implementation module for Vert.x",
+  "licenses": ["The Apache Software License Version 2.0"],
+  "author": "Julien Viet",
+  "keywords": ["golo", "scripting", "language"],
+  "homepage": "https://github.com/vietj/vertx-golo"
+}

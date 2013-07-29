@@ -19,8 +19,12 @@
 package org.vertx.golo.deploy.impl.golo;
 
 import org.vertx.golo.VerticleContext;
-import org.vertx.java.deploy.Verticle;
+import org.vertx.java.core.Vertx;
+import org.vertx.java.core.VertxException;
+import org.vertx.java.platform.Container;
+import org.vertx.java.platform.Verticle;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /** @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a> */
@@ -39,25 +43,54 @@ public class GoloVerticle extends Verticle {
   /** . */
   private final VerticleContext context;
 
-  GoloVerticle(Class<?> clazz) {
+  GoloVerticle(final Vertx vertx, final Container container, Class<?> clazz) {
     this.clazz = clazz;
-    this.context = new VerticleContext(this);
+    this.context = new VerticleContext() {
+      @Override
+      public Vertx getVertx() {
+        return vertx;
+      }
+      @Override
+      public Container getContainer() {
+        return container;
+      }
+    };
   }
 
   @Override
-  public void start() throws Exception {
-    Method m = clazz.getMethod("start");
-    current.set(context);
+  public void start() {
+    lifeCycle("start");
+  }
+
+  @Override
+  public void stop() {
+    lifeCycle("stop");
+  }
+
+  public void lifeCycle(String lifeCycle) {
+    Method m;
     try {
-      m.invoke(null);
+      m = clazz.getMethod(lifeCycle);
     }
-    finally {
-      current.remove();
+    catch (NoSuchMethodException e) {
+      // No stop
+      m = null;
     }
-  }
-
-  @Override
-  public void stop() throws Exception {
+    if (m != null) {
+      current.set(context);
+      try {
+        m.invoke(null);
+      }
+      catch (InvocationTargetException e) {
+        throw new VertxException("Could not execute life cycle " + lifeCycle +" verticle", e.getCause());
+      }
+      catch (IllegalAccessException e) {
+        throw new VertxException("Could not use verticle", e);
+      }
+      finally {
+        current.remove();
+      }
+    }
   }
 }
 

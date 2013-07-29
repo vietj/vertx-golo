@@ -19,9 +19,11 @@
 package org.vertx.golo.deploy.impl.golo;
 
 import fr.insalyon.citi.golo.compiler.GoloClassLoader;
-import org.vertx.java.deploy.Verticle;
-import org.vertx.java.deploy.impl.VerticleFactory;
-import org.vertx.java.deploy.impl.VerticleManager;
+import org.vertx.java.core.Vertx;
+import org.vertx.java.core.logging.Logger;
+import org.vertx.java.platform.Container;
+import org.vertx.java.platform.Verticle;
+import org.vertx.java.platform.VerticleFactory;
 
 import java.io.InputStream;
 
@@ -29,23 +31,34 @@ import java.io.InputStream;
 public class GoloVerticleFactory implements VerticleFactory {
 
   /** . */
-  private VerticleManager manager;
+  private Vertx vertx;
 
-  public void init(VerticleManager manager) {
-    this.manager = manager;
+  /** . */
+  private Container container;
+
+  /** . */
+  private ClassLoader classLoader;
+
+  public void init(Vertx vertx, Container container, ClassLoader cl) {
+    this.vertx = vertx;
+    this.container = container;
+    this.classLoader = cl;
   }
 
-  public Verticle createVerticle(String main, ClassLoader parentCL) throws Exception {
-    InputStream in = parentCL.getResourceAsStream(main);
+  public Verticle createVerticle(String main) throws Exception {
+    InputStream in = classLoader.getResourceAsStream(main);
     if (in == null) {
       throw new Exception("Could not locate golo source " + main);
     }
-    GoloClassLoader loader = new GoloClassLoader(parentCL);
+    GoloClassLoader loader = new GoloClassLoader(classLoader);
     Class<?> clazz = loader.load(main, in);
-    return new GoloVerticle(clazz);
+    return new GoloVerticle(vertx, container, clazz);
   }
 
-  public void reportException(Throwable t) {
-    t.printStackTrace();
+  public void reportException(Logger logger, Throwable t) {
+    logger.error("", t);
+  }
+
+  public void close() {
   }
 }
