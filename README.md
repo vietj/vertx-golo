@@ -2,7 +2,7 @@ Golo language integration for Vert.x server
 
 # Installation
 
-We suppose that Vert.x 1.3.1 is installed already in $VERTX_HOME
+We suppose that Vert.x 2.0.0 is installed already in $VERTX_HOME
 
 1. Clone or download this build
 1. Build project with Maven : `mvn package`
